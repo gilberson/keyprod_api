@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('orders', static function (Blueprint $table) {
             $table->id();
             $table->string('order_reference');
-            $table->decimal('total', 8, 2);
             $table->integer('status');
             $table->timestamps();
         });

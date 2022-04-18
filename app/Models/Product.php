@@ -23,11 +23,6 @@ class Product extends Model
         return $this->hasMany(Media::class);
     }
 
-    public function customer(): BelongsTo
-    {
-        return $this->belongsTo(Customer::class);
-    }
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_products', static function (Blueprint $table) {
-            $table->unsignedBigInteger('product_id');
+        Schema::create('order_product', static function (Blueprint $table) {
             $table->unsignedBigInteger('order_id');
-            $table->integer('quantity');
+            $table->unsignedBigInteger('product_id');
+            $table->integer('quantity')->nullable();
             $table->timestamps();
         });
     }
