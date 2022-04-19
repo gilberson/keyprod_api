@@ -23,13 +23,16 @@ class OrderFactory extends Factory
     #[ArrayShape(['order_reference' => "string", 'status' => "int", 'customer_id' => "int"])]
     public function definition(): array
     {
-        $customers = Customer::select('id')->get()->toArray();
-        $key = array_rand($customers);
+        $customersId = [];
+        $customers = Customer::all();//Customer::select('id')->get()->toArray();
+        foreach ($customers as $customer) {
+            $customersId[] = $customer->id;
+        }
 
         return [
             'order_reference' => $this->faker->isbn13(),
             'status' => random_int(1, 3),
-            'customer_id' => $customers[$key],
+            'customer_id' => $customersId[array_rand($customersId, 1)]
         ];
     }
 }
