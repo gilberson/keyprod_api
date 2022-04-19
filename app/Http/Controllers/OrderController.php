@@ -4,24 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
+use App\Http\Resources\ProductCollection;
 use App\Models\Order;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        return response()->json([
+            'orders' => new OrderCollection(Order::all())
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -31,8 +38,8 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreOrderRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreOrderRequest $request
+     * @return void
      */
     public function store(StoreOrderRequest $request)
     {
@@ -42,19 +49,22 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param Order $order
+     * @return JsonResponse
      */
-    public function show(Order $order)
+    public function show(Order $order): JsonResponse
     {
-        //
+        return response()->json([
+            'order_items' => new ProductCollection($order->products()->get()),
+            'order' => new OrderResource($order)
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param Order $order
+     * @return Response
      */
     public function edit(Order $order)
     {
@@ -64,9 +74,9 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateOrderRequest  $request
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param UpdateOrderRequest $request
+     * @param Order $order
+     * @return Response
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
@@ -76,8 +86,8 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param Order $order
+     * @return Response
      */
     public function destroy(Order $order)
     {

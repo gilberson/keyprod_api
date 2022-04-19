@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Category;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,5 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResources([
-    'categories' => Category::class,
+    'categories' => CategoryController::class,
+    'orders' => OrderController::class,
 ]);
