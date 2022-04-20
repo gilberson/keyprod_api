@@ -22,17 +22,7 @@ class OrderController extends Controller
     {
         return response()->json([
             'orders' => new OrderCollection(Order::all())
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
+        ], 200);
     }
 
     /**
@@ -57,18 +47,7 @@ class OrderController extends Controller
         return response()->json([
             'order_items' => new ProductCollection($order->products()->get()),
             'order' => new OrderResource($order)
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Order $order
-     * @return Response
-     */
-    public function edit(Order $order)
-    {
-        //
+        ], 200);
     }
 
     /**

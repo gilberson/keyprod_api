@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property bool|mixed $is_scanned
+ * @method static where(string $string, $null)
+ * @method static find(int $param)
  */
 class Product extends Model
 {
@@ -29,5 +31,10 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function package(): BelongsTo
+    {
+        return $this->belongsTo(Package::class);
     }
 }
