@@ -6,8 +6,10 @@ use App\Http\Requests\StorePackageRequest;
 use App\Http\Requests\UpdatePackageRequest;
 use App\Http\Resources\PackageResource;
 use App\Http\Resources\ProductCollection;
+use App\Http\Resources\TrackingResource;
 use App\Models\Package;
 use App\Models\Product;
+use App\Models\Tracking;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -134,5 +136,35 @@ class PackageController extends Controller
             'message' => 'Products removed from the package successfully',
             'package' => $package->products()->get()
         ], 200);
+    }
+
+    /**
+     * @param Package $package
+     * @return JsonResponse
+     */
+    public function getTracking(Package $package): JsonResponse
+    {
+        if($package->tracking()->first() === null)
+        {
+            return response()->json([
+                'tracking' => []
+            ], 200);
+        }
+        return response()->json([
+            'tracking' => new TrackingResource($package->tracking()->first())
+        ], 200);
+    }
+
+    public function createTracking(Request $request, Package $package): JsonResponse
+    {
+        $tracking = Tracking::create([
+            'tracking_number' => $request->get('tracking_number'),
+            'description' => $request->get('description'),
+            'package_id' => $package->id
+        ]);
+
+        return response()->json([
+            'tracking' => $tracking
+        ], 201);
     }
 }

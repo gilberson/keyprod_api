@@ -18,16 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});*/
-
-//Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
-//Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
+});
 
 Route::get('packages/{package}/items', [PackageController::class, 'getPackageItems'])->name('packages.items');
+Route::get('packages/{package}/tracking', [PackageController::class, 'getTracking'])->name('packages.tracking');
 Route::put('packages/{package}/add-products', [PackageController::class, 'addProductsToPackage'])->name('packages.add-products');
 Route::put('packages/{package}/remove-products', [PackageController::class, 'removeProductsFromPackage'])->name('packages.remove-products');
+Route::post('packages/{package}/tracking/create', [PackageController::class, 'createTracking'])->name('packages.tracking.create');
 
 Route::apiResources([
     'categories' => CategoryController::class,

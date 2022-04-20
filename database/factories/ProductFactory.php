@@ -20,12 +20,20 @@ class ProductFactory extends Factory
      * Define the model's default state.
      *
      * @return array<string, mixed>
+     * @throws \Exception
      */
-    #[ArrayShape(['name' => "string", 'amount' => "float", 'description' => "string", 'slug' => "string", 'category_id' => "int", 'unique_product_id' => 'string'])]
+    #[ArrayShape(['name' => "string",
+        'amount' => "float",
+        'description' => "string",
+        'slug' => "string",
+        'category_id' => "int",
+        'unique_product_id' => 'string',
+        'is_scanned' => 'boolean',
+        'weight' => 'string'
+    ])]
     public function definition(): array
     {
         $name = $this->faker->name();
-        $date = date('Y-m-d H:i:s');
 
         return [
             'name' => $name,
@@ -33,7 +41,9 @@ class ProductFactory extends Factory
             'description' => implode((array)$this->faker->paragraph(5)),
             'slug' => Str::slug($name),
             'category_id' => Category::factory()->create()->id,
-            'unique_product_id' => unique_product_id(self::APP_NAME, self::APP_VERSION)
+            'unique_product_id' => unique_product_id(self::APP_NAME, self::APP_VERSION),
+            'is_scanned' => false,
+            'weight' => random_int(1, 100).'Kg'
         ];
     }
 }
