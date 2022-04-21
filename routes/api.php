@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TrackingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::apiResources([
     'orders' => OrderController::class,
     'products' => ProductController::class,
     'packages' => PackageController::class,
+    'tracking' => TrackingController::class,
 ]);
 
 

@@ -147,7 +147,7 @@ class PackageController extends Controller
         if($package->tracking()->first() === null)
         {
             return response()->json([
-                'tracking' => []
+                'tracking' => null
             ], 200);
         }
         return response()->json([
